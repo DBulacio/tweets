@@ -1,16 +1,16 @@
 <template>
     <!-- v-for -->
-    <Tweet />
-    <Tweet />
+    <myTweet />
+    <myTweet />
 </template>
 
 <script>
-    import Tweet from './Tweet.vue'
+    import myTweet from './myTweet.vue'
 
     export default {
-        name: 'Tweets',
+        name: 'myTweets',
         components: {
-            Tweet,
+            myTweet,
         }
     }
 </script>

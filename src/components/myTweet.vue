@@ -21,7 +21,7 @@
 
 <script>
 export default {
-    name: 'Tweet',
+    name: 'myTweet',
     data() {
         return {
             categoria: 'Videojuegos',
