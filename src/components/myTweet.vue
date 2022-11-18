@@ -1,20 +1,20 @@
 <template>
-    <div>
+    <div v-for="tweet in tweets" :key="tweet-id">
         <header class="align">
             <!-- Categoría de publicación -->
-            <p>{{categoria}}</p>
+            <p>{{tweet.categoria}}</p>
             <!-- Región de publicación -->
-            <p>{{region}}</p>
+            <p>{{tweet.region}}</p>
         </header>
         <!-- Contenido -->
         <section>
-            <p>{{contenido}}</p>
+            <p>{{tweet.contenido}}</p>
         </section>
         <footer class="align">
             <!-- Fecha y hora -->
-            <p>{{fecha}}</p>
+            <p>{{tweet.fecha}}</p>
             <!-- Links -->
-            <p>ver más en <a href="">{{enlace}}</a></p>
+            <p>ver más en <a href="">{{tweet.enlace}}</a></p>
         </footer>
     </div>
 </template>
@@ -22,14 +22,8 @@
 <script>
 export default {
     name: 'myTweet',
-    data() {
-        return {
-            categoria: 'Videojuegos',
-            region: 'Argentina',
-            contenido: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis quos, facere iste eius, labore, debitis placeat cumque optio cum a distinctio modi odit autem! Ipsa libero odit unde et quibusdam?',
-            fecha: 'hoy, 10:45',
-            enlace: 'google.com',
-        }
+    props: {
+        tweets: Array
     }
 }
 </script>
