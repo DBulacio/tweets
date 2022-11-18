@@ -5,20 +5,20 @@
       <input type="text">
     </div>
 
-    <div >
-      <Tweets />
+    <div>
+      <myTweets />
     </div>
   </div>
 </template>
 
 <script>
 // import HelloWorld from "./components/HelloWorld.vue";
-import Tweets from "./components/Tweets.vue";
+import myTweets from "./components/myTweets.vue";
 
 export default {
   name: "App",
   components: {
-    Tweets,
+    myTweets,
   },
 };
 </script>
@@ -31,8 +31,5 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-.container {
-  margin: 0 10rem;
 }
 </style>
