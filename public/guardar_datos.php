@@ -41,22 +41,26 @@ try {
     
     if(isset($_POST['etiqueta'])) {
         # Las etiquetas vienen separadas por comas. 
-        # Falta proceso de separación y subida por separado.
+        # Proceso de separación:
+        $spaceless_tag = str_replace(" ", "", $_POST['etiqueta']);
+        $etiquetas = explode(",", $spaceless_tag);
 
-        # Chequear si la etiqueta existe en etiquetas
-        $SELECT_etiquetas->execute(['etiqueta' => $_POST['etiqueta']]);
-        if($SELECT_etiquetas->rowCount() > 0) { 
-            # Si existe traer el id
-            while($row_etiquetas = $SELECT_etiquetas->fetch()) {
-                $etiquetaID = $row_etiquetas['etiquetaID'];
+        foreach($etiquetas as $etiqueta) {
+            # Chequear si la etiqueta existe en etiquetas
+            $SELECT_etiquetas->execute(['etiqueta' => $etiqueta]);
+            if($SELECT_etiquetas->rowCount() > 0) { 
+                # Si existe traer el id
+                while($row_etiquetas = $SELECT_etiquetas->fetch()) {
+                    $etiquetaID = $row_etiquetas['etiquetaID'];
+                }
+            } else {
+                # Si no existe crearla y traer el id
+                if($INSERT_etiqueta->execute(['etiqueta' => $etiqueta]))
+                    $etiquetaID = $con->lastInsertId();
             }
-        } else {
-            # Si no existe crearla y traer el id
-            if($INSERT_etiqueta->execute(['etiqueta' => $_POST['etiqueta']]))
-                $etiquetaID = $con->lastInsertId();
+            # Insertar en publi_tags
+            $INSERT_publi_etiqueta->execute(['publicacionID' => $publicacionID, 'etiquetaID' => $etiquetaID]);
         }
-        # Insertar en publi_tags
-        $INSERT_publi_etiqueta->execute(['publicacionID' => $publicacionID, 'etiquetaID' => $etiquetaID]);
     }
 
     # Pensar cómo hacerlo
