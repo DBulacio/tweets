@@ -1,10 +1,12 @@
 <template>
-    <div v-for="tweet in tweets" :key="tweet-id">
+    <!-- chequear si los campos opcionales tienen algún valor,
+    sino hardcodear alguna otra cosa. -->
+    <div v-for="tweet in tweets" :key="tweet.id">
         <header class="align">
             <!-- Categoría de publicación -->
             <p>{{tweet.categoria}}</p>
             <!-- Región de publicación -->
-            <p>{{tweet.region}}</p>
+            <!-- <p>{{tweet.region}}</p> -->
         </header>
         <!-- Contenido -->
         <section>
@@ -14,7 +16,7 @@
             <!-- Fecha y hora -->
             <p>{{tweet.fecha}}</p>
             <!-- Links -->
-            <p>ver más en <a href="">{{tweet.enlace}}</a></p>
+            <!-- <p>ver más en <a href="">{{tweet.enlace}}</a></p> -->
         </footer>
     </div>
 </template>

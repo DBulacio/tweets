@@ -4,6 +4,7 @@
 
 <script>
     import myTweet from './myTweet.vue'
+    import axios from 'axios'
 
     export default {
         name: 'myTweets',
@@ -15,24 +16,24 @@
                 tweets: []
             }
         },
+        methods: {
+            leerTweets() {
+                axios.get('http://127.0.0.1/tweets/src/backend/leer_datos.php?action=fetchall')
+                .then(response => {
+                    this.tweets = response.data;
+                }).catch((err) => {
+                    this.tweets = [
+                        {
+                            'contenido': err,
+                            'categoria': 'categoria',
+                            'fecha': 'fecha',
+                        }
+                    ];
+                })
+            }
+        },
         created() {
-            // request!
-            this.tweets = [
-                {
-                    categoria: 'Videojuegos',
-                    region: 'Argentina',
-                    contenido: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis quos, facere iste eius, labore, debitis placeat cumque optio cum a distinctio modi odit autem! Ipsa libero odit unde et quibusdam?',
-                    fecha: 'hoy, 10:45',
-                    enlace: 'google.com',
-                },
-                {
-                    categoria: 'Noticias',
-                    region: 'Ecuador',
-                    contenido: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis quos, facere iste eius, labore, debitis placeat cumque optio cum a distinctio modi odit autem! Ipsa libero odit unde et quibusdam?',
-                    fecha: 'ayer, 10:45',
-                    enlace: 'cosas.com',
-                }
-            ]
+            this.leerTweets();
         }
     }
 </script>

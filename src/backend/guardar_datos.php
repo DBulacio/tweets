@@ -77,7 +77,7 @@ try {
     $con->rollback();
     // log any errors to file
     echo json_encode(array('success' => 0));
-    ExceptionErrorHandler($e);
+    // ExceptionErrorHandler($e);
     exit;
 }
 
