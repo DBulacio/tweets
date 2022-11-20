@@ -8,9 +8,6 @@ $SELECT_publi_region  = $con->prepare("SELECT * FROM publi_region WHERE publicac
 $SELECT_publi_tags    = $con->prepare("SELECT * FROM publi_tags WHERE publicacionID = :publicacionID");
 $SELECT_etiquetas     = $con->prepare("SELECT * FROM etiquetas WHERE etiquetaID = :etiquetaID");
 $SELECT_regiones      = $con->prepare("SELECT * FROM regiones WHERE regionID = :regionID");
-$SELECT_tags  = $con->prepare("SELECT etiquetaID FROM etiquetas WHERE etiqueta LIKE :action");
-$SELECT_publi = $con->prepare("SELECT * FROM publicacion WHERE contenido LIKE :action OR categoria LIKE :action");
-$SELECT_publi_tags = $con->prepare("SELECT publicacionID FROM publi_tags WHERE etiquetaID = :etiquetaID");
 $SELECT_publi_id   = $con->prepare("SELECT * FROM publicacion WHERE publicacionID = :publicacionID");
 
 if($action == 'fetchall') { # Si el filtro está vacío
@@ -41,25 +38,10 @@ if($action == 'fetchall') { # Si el filtro está vacío
                 # No hay regiones
                 $publicacion[$i]['region'] = NULL;
             }
-
-            // $SELECT_publi_tags->execute($publicacionID);
-            // if($SELECT_publi_tags->rowCount() > 0) {
-            //     while($row_publi_tags = $SELECT_publi_tags->fetch()) {
-            //         $etiquetaID = ['etiquetaID' => $row_publi_tags['etiquetaID']];
-                    
-            //         $SELECT_etiquetas->execute($etiquetaID);
-            //         while($row_etiquetas = $SELECT_etiquetas->fetch()) {
-            //             $publicacion[$i]['etiqueta'] = $row_etiquetas['etiqueta'];   
-            //         }
-            //     }
-            // } else {
-            //     # No hay etiquetas
-            //     $publicacion[$i]['etiqueta'] = NULL;
-            // }
             $i++;
         }
     } else {
-        # No hay tweets que mostrar.
+        # No hay publicaciones en la base de datos.
     }
     
     echo json_encode($publicacion);
@@ -67,7 +49,6 @@ if($action == 'fetchall') { # Si el filtro está vacío
     // encontrar publicaciones que contengan la palabra en 
     // la etiqueta, el contenido o la categoria
     $action = '%' . $action . '%';
-    $i = 0;
 
     $SELECT = $con->prepare("SELECT DISTINCT pt.publicacionID 
     FROM etiquetas tags
@@ -81,10 +62,38 @@ if($action == 'fetchall') { # Si el filtro está vacío
     $SELECT->bindParam(':action', $action, PDO::PARAM_STR);
     $SELECT->execute();
     if($SELECT->rowCount() > 0) {
+        $i = 0;
         while($row = $SELECT->fetch(PDO::FETCH_ASSOC)) {
-            echo json_encode($row);
+            $publicacionID = $row;
+
+            $SELECT_publi_id->execute($publicacionID);
+            while($row_publicacion = $SELECT_publi_id->fetch()) {
+                $publicacion[$i]['id'] = $row_publicacion['publicacionID'];
+                $publicacion[$i]['contenido'] = $row_publicacion['contenido'];
+                $publicacion[$i]['categoria'] = $row_publicacion['categoria'];
+                $publicacion[$i]['fecha'] = $row_publicacion['hora']; # Estoy guardando solo la fecha ahora. UPS! @fix
+            }
+
+            $SELECT_publi_region->execute($publicacionID);
+            if($SELECT_publi_region->rowCount() > 0) {
+                while($row_publi_region = $SELECT_publi_region->fetch()) {
+                    $regionID = ['regionID' => $row_publi_region['regionID']];
+                    
+                    $SELECT_regiones->execute($regionID);
+                    while($row_regiones = $SELECT_regiones->fetch()) {
+                        $publicacion[$i]['region'] = $row_regiones['region'];   
+                    }
+                }
+            } else {
+                # No hay regiones
+                $publicacion[$i]['region'] = NULL;
+            }
+            $i++;
         }
+    } else {
+        # No hay publicacion que coincidan con el criterio de busqueda. 
     }
+    echo json_encode($publicacion);
 }
 
 function crear_con() {
