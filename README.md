@@ -1,24 +1,16 @@
 # tweets
 
-## Project setup
-```
-npm install
-```
+## Explicación del proyecto
+Test Técnico FULL STACK.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Para esta prueba estaré trabajando en una fuente de noticias "similar a Twitter"
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Tecnologías a usar
+Frontend: Vuejs. (Será mi primera vez utilizando este framework de JavaScript)
 
-### Lints and fixes files
-```
-npm run lint
-```
+Backend: PHP y MySQL.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Expectativas
+ - Aprender y llegar a ser medianamente competente en tecnologías nuevas para mi (en este caso Vuejs).
+ - Pulir aspectos de mi entendimiento de PHP y MySQL. Conocer y adaptar las "best practices" a mi trabajo diario.
+ - Conseguir un nuevo trabajo en el que los dos puntos anteriores sean parte del día a día :D
