@@ -39,7 +39,7 @@ if($action == 'fetchall') { # Si el filtro está vacío
             $i++;
         }
     } else {
-        # No hay publicaciones en la base de datos.
+        $publicacion = NULL;
     }
     
     echo json_encode($publicacion);
@@ -89,7 +89,7 @@ if($action == 'fetchall') { # Si el filtro está vacío
             $i++;
         }
     } else {
-        # No hay publicacion que coincidan con el criterio de busqueda. 
+        $publicacion = NULL;
     }
     echo json_encode($publicacion);
 }
