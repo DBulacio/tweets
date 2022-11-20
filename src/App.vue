@@ -2,17 +2,16 @@
   <div class="container">
     <div class="align">
       <h1>Stetic News</h1>
-      <input type="text">
+      <input v-model="textInput" type="text" placeholder="Search" />
     </div>
 
     <div>
-      <myTweets />
+      <myTweets :filter="textInput"/>
     </div>
   </div>
 </template>
 
 <script>
-// import HelloWorld from "./components/HelloWorld.vue";
 import myTweets from "./components/myTweets.vue";
 
 export default {
@@ -20,7 +19,12 @@ export default {
   components: {
     myTweets,
   },
-};
+  data() {
+    return {
+      textInput: ''
+    }
+  }
+}
 </script>
 
 <style>
@@ -36,5 +40,8 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+.search-input {
+  width: 20%;
 }
 </style>

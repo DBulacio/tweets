@@ -1,6 +1,4 @@
 <template>
-    <!-- chequear si los campos opcionales tienen algún valor,
-    sino hardcodear alguna otra cosa. -->
     <div v-for="tweet in tweets" :key="tweet.id">
         <header class="align border-bottom">
             <!-- Categoría de publicación -->
@@ -33,7 +31,6 @@ export default {
 <style scoped>
     div {
         margin: .5rem 0;
-        /* padding: .8rem 1rem 0 1rem; */
         border: 1px solid black ;
         box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
     }

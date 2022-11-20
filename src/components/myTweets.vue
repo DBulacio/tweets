@@ -16,9 +16,17 @@
                 tweets: []
             }
         },
+        props: {
+            filter: String
+        },
         methods: {
             leerTweets() {
-                axios.get('http://127.0.0.1/tweets/src/backend/leer_datos.php?action=fetchall')
+                let action = "fetchall";
+                if(this.filter != "") {
+                    action = this.filter
+                }
+
+                axios.get('http://127.0.0.1/tweets/src/backend/leer_datos.php?action=' + action)
                 .then(response => {
                     this.tweets = response.data;
                 }).catch((err) => {
