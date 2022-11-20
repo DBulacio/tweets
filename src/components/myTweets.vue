@@ -20,13 +20,14 @@
             filter: String
         },
         methods: {
-            leerTweets() {
-                let action = "fetchall";
+            leerTweets(action) {
                 if(this.filter != "") {
                     action = this.filter
+                } else {
+                    action = "fetchall";
                 }
 
-                axios.get('http://127.0.0.1/tweets/src/backend/leer_datos.php?action=' + action)
+                axios.get('http://127.0.0.1/tweets/src/backend/leer_datos.php?action='+action)
                 .then(response => {
                     this.tweets = response.data;
                 }).catch((err) => {
@@ -41,7 +42,12 @@
             }
         },
         created() {
-            this.leerTweets();
+            this.leerTweets(this.filter);
+        },
+        watch: { // eslint-disable-next-line no-mixed-spaces-and-tabs
+      	    filter: function(newVal) {
+                this.leerTweets(newVal);
+            }
         }
     }
 </script>
