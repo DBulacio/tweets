@@ -32,4 +32,9 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+.align {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 </style>

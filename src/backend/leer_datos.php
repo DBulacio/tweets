@@ -23,7 +23,7 @@ if($action == 'fetchall') {
             $publicacion[$i]['contenido'] = $row_publicacion['contenido'];
             $publicacion[$i]['categoria'] = $row_publicacion['categoria'];
             $publicacion[$i]['fecha'] = $row_publicacion['hora']; # Estoy guardando solo la fecha ahora. UPS! @fix
-/*            $publicacionID = ['publicacionID' => $row_publicacion['publicacionID']];
+            $publicacionID = ['publicacionID' => $row_publicacion['publicacionID']];
 
             $SELECT_publi_region->execute($publicacionID);
             if($SELECT_publi_region->rowCount() > 0) {
@@ -32,11 +32,12 @@ if($action == 'fetchall') {
                     
                     $SELECT_regiones->execute($regionID);
                     while($row_regiones = $SELECT_regiones->fetch()) {
-                        $publicacion['region'] = $row_regiones['region'];   
+                        $publicacion[$i]['region'] = $row_regiones['region'];   
                     }
                 }
             } else {
                 # No hay regiones
+                $publicacion[$i]['region'] = NULL;
             }
 
             $SELECT_publi_tags->execute($publicacionID);
@@ -46,12 +47,13 @@ if($action == 'fetchall') {
                     
                     $SELECT_etiquetas->execute($etiquetaID);
                     while($row_etiquetas = $SELECT_etiquetas->fetch()) {
-                        $publicacion['etiqueta'] = $row_etiquetas['etiqueta'];   
+                        $publicacion[$i]['etiqueta'] = $row_etiquetas['etiqueta'];   
                     }
                 }
             } else {
                 # No hay etiquetas
-            }    */
+                $publicacion[$i]['etiqueta'] = NULL;
+            }
             $i++;
         }
     } else {
