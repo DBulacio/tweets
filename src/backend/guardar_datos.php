@@ -12,7 +12,9 @@ if(!isset($_POST['contenido']) || !isset($_POST['categoria'])) {
 $con->beginTransaction();
 
 try {
-    $hora = date('Y-m-d H:i:s');
+    date_default_timezone_set("America/Argentina/Buenos_Aires");
+    $hora = time();
+    $hora = date("Y-m-d H:i:s", $hora);
     $contenido = $_POST['contenido'];
     $categoria = $_POST['categoria'];
     
@@ -63,12 +65,15 @@ try {
         }
 
         if(isset($_POST['enlace'])) {
-            # Las etiquetas vienen separadas por comas. 
+            # Los enlaces vienen separados por comas. 
             # Proceso de separación:
             $spaceless_enlace = str_replace(" ", "", $_POST['enlace']);
             $enlaces = explode(",", $spaceless_enlace);
-    
+            
             foreach($enlaces as $enlace) {
+                if(substr($enlace, 0, 7) !== "https://" && substr($enlace, 0, 6) !== "http://")
+                    $enlace = "https://".$enlace;
+
                 $INSERT_enlace->execute(['publicacionID' => $publicacionID, 'enlace' => $enlace]);
             }
         }
@@ -81,7 +86,7 @@ try {
 } catch(PDOException $e) {
     $con->rollback();
     // log any errors to file
-    echo json_encode(array('success' => 0));
+    echo json_encode(array('success' => $e));
     // ExceptionErrorHandler($e);
     exit;
 }
@@ -89,7 +94,7 @@ try {
 function crear_con() {
     $user = "root";
     $pass = "";
-    $dbname = "twooter";
+    $dbname = "noticias";
 
     try {
         $con = new PDO('mysql:host=localhost;dbname='.$dbname, $user, $pass);
