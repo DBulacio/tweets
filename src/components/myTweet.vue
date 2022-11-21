@@ -14,7 +14,11 @@
             <!-- Fecha y hora -->
             <p>{{tweet.fecha}}</p>
             <!-- Links -->
-            <p>ver más en <a href="">{{tweet.enlace}}</a></p>
+            <p>ver más en
+                <span v-for="(link, index) in tweet.enlace" :key="index">
+                    <a :href="link">{{link}}</a><span v-if="index < tweet.enlace.length - 1"> y </span>
+                </span>
+            </p>
         </footer>
     </div>
 </template>

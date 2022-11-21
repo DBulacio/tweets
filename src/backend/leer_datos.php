@@ -8,9 +8,10 @@ $SELECT_publi_region  = $con->prepare("SELECT * FROM publi_region WHERE publicac
 $SELECT_publi_tags    = $con->prepare("SELECT * FROM publi_tags WHERE publicacionID = :publicacionID");
 $SELECT_etiquetas     = $con->prepare("SELECT * FROM etiquetas WHERE etiquetaID = :etiquetaID");
 $SELECT_regiones      = $con->prepare("SELECT * FROM regiones WHERE regionID = :regionID");
-$SELECT_publi_id   = $con->prepare("SELECT * FROM publicacion WHERE publicacionID = :publicacionID");
+$SELECT_publi_id = $con->prepare("SELECT * FROM publicacion WHERE publicacionID = :publicacionID");
+$SELECT_enlaces  = $con->prepare("SELECT * FROM enlace WHERE publicacionID = :publicacionID");
 
-if($action == 'fetchall') { # Si el filtro está vacío
+if($action == '') { # Si el filtro está vacío
     $SELECT_publicaciones->execute();
     if($SELECT_publicaciones->rowCount() > 0) {
         $publicacion = array();
@@ -36,6 +37,15 @@ if($action == 'fetchall') { # Si el filtro está vacío
                 # No hay regiones
                 $publicacion[$i]['region'] = NULL;
             }
+
+            $publicacion[$i]['enlace'] = array();
+            $SELECT_enlaces->execute($publicacionID);
+            while($row_enlaces = $SELECT_enlaces->fetch()) {
+                # Guardo todos los enlace en una posición nueva del array para poder mostrarlos 
+                # en caso de que haya más de uno.
+                array_push($publicacion[$i]['enlace'], $row_enlaces['enlace']);
+            }
+
             $i++;
         }
     } else {
@@ -85,6 +95,14 @@ if($action == 'fetchall') { # Si el filtro está vacío
             } else {
                 # No hay regiones
                 $publicacion[$i]['region'] = NULL;
+            }
+
+            $publicacion[$i]['enlace'] = array();
+            $SELECT_enlaces->execute($publicacionID);
+            while($row_enlaces = $SELECT_enlaces->fetch()) {
+                # Guardo todos los enlace en una posición nueva del array para poder mostrarlos 
+                # en caso de que haya más de uno.
+                array_push($publicacion[$i]['enlace'], $row_enlaces['enlace']);
             }
             $i++;
         }

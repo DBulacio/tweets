@@ -61,13 +61,18 @@ try {
             # Insertar en publi_tags
             $INSERT_publi_etiqueta->execute(['publicacionID' => $publicacionID, 'etiquetaID' => $etiquetaID]);
         }
+
+        if(isset($_POST['enlace'])) {
+            # Las etiquetas vienen separadas por comas. 
+            # Proceso de separación:
+            $spaceless_enlace = str_replace(" ", "", $_POST['enlace']);
+            $enlaces = explode(",", $spaceless_enlace);
+    
+            foreach($enlaces as $enlace) {
+                $INSERT_enlace->execute(['publicacionID' => $publicacionID, 'enlace' => $enlace]);
+            }
+        }
     }
-
-    # Pensar cómo hacerlo
-    // if(isset($_POST['enlace'])) {
-    //     $INSERT_enlace->execute('publicacionID' => $publicacionID, 'enlace' => $enlace); # Chequear que se haya hecho...
-    // }
-
 
     $con->commit();
     # Mensaje de ok! 
