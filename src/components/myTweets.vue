@@ -23,8 +23,6 @@
             leerTweets(action) {
                 if(this.filter != "") {
                     action = this.filter
-                } else {
-                    action = "fetchall";
                 }
 
                 axios.get('http://127.0.0.1/tweets/src/backend/leer_datos.php?action='+action)
@@ -33,7 +31,7 @@
                 }).catch((err) => {
                     this.tweets = [
                         {
-                            'contenido': err,
+                            'contenido': 'Hubo un error en la lectura de base de datos: '+err,
                             'categoria': 'categoria',
                             'fecha': 'fecha',
                         }
