@@ -44,4 +44,8 @@ export default {
 .search-input {
   width: 20%;
 }
+a {
+  text-decoration: none;
+  color: black;
+}
 </style>
