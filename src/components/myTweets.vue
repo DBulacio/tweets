@@ -32,8 +32,8 @@
                     this.tweets = [
                         {
                             'contenido': 'Hubo un error en la lectura de base de datos: '+err,
-                            'categoria': 'categoria',
-                            'fecha': 'fecha',
+                            'categoria': 'error',
+                            'fecha': 'error',
                         }
                     ];
                 })

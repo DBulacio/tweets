@@ -104,7 +104,7 @@ function validate_website($str) {
 function crear_con() {
     $user = "root";
     $pass = "";
-    $dbname = "twooter";
+    $dbname = "noticias";
 
     try {
         $con = new PDO('mysql:host=localhost;dbname='.$dbname, $user, $pass);

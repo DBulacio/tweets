@@ -11,7 +11,7 @@ $SELECT_regiones      = $con->prepare("SELECT * FROM regiones WHERE regionID = :
 $SELECT_publi_id = $con->prepare("SELECT * FROM publicacion WHERE publicacionID = :publicacionID");
 $SELECT_enlaces  = $con->prepare("SELECT * FROM enlace WHERE publicacionID = :publicacionID");
 
-if($action == '') { # Si el filtro está vacío
+if($action == "") { # Si el filtro está vacío
     $SELECT_publicaciones->execute();
     if($SELECT_publicaciones->rowCount() > 0) {
         $publicacion = array();
@@ -20,10 +20,11 @@ if($action == '') { # Si el filtro está vacío
             $publicacion[$i]['id'] = $row_publicacion['publicacionID'];
             $publicacion[$i]['contenido'] = $row_publicacion['contenido'];
             $publicacion[$i]['categoria'] = $row_publicacion['categoria'];
-            $publicacion[$i]['fecha']   = $row_publicacion['hora'];
             $publicacion[$i]['empresa'] = $row_publicacion['empresa'];
             $publicacion[$i]['website'] = $row_publicacion['website'];
+            $publicacion[$i]['fecha']   = $row_publicacion['hora'];
             $publicacionID = ['publicacionID' => $row_publicacion['publicacionID']];
+            
 
             $SELECT_publi_region->execute($publicacionID);
             if($SELECT_publi_region->rowCount() > 0) {
@@ -119,7 +120,7 @@ if($action == '') { # Si el filtro está vacío
 function crear_con() {
     $user = "root";
     $pass = "";
-    $dbname = "twooter";
+    $dbname = "noticias";
 
     try {
         $con = new PDO('mysql:host=localhost;dbname='.$dbname, $user, $pass);

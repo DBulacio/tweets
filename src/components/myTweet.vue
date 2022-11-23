@@ -29,12 +29,6 @@ export default {
     name: 'myTweet',
     props: {
         tweets: Array
-    },
-    data() {
-        return {
-            em: "Stetic News",
-            mm: "https://google.com"
-        }
     }
 }
 </script>
