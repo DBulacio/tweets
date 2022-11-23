@@ -75,7 +75,7 @@ try {
             $enlaces = explode(",", $spaceless_enlace);
             
             foreach($enlaces as $enlace) {
-                validate_website($enlace);
+                $enlace = validate_website($enlace);
                 $INSERT_enlace->execute(['publicacionID' => $publicacionID, 'enlace' => $enlace]);
             }
         }
@@ -94,8 +94,9 @@ try {
 }
 
 function validate_website($str) {
-    if(substr($str, 0, 7) !== "https://" && substr($str, 0, 6) !== "http://")
-        return "https://".$str;
+    if(substr($str, 0, 7) !== "https://" && substr($str, 0, 6) !== "http://") {
+        $str = "https://".$str;
+    } 
 
     return $str;
 }
