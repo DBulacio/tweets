@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 21-11-2022 a las 23:18:26
+-- Tiempo de generación: 23-11-2022 a las 02:38:50
 -- Versión del servidor: 5.7.31
 -- Versión de PHP: 7.3.21
 
@@ -76,6 +76,8 @@ CREATE TABLE IF NOT EXISTS `publicacion` (
   `contenido` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `categoria` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `hora` datetime NOT NULL,
+  `empresa` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `website` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`publicacionID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -83,8 +85,8 @@ CREATE TABLE IF NOT EXISTS `publicacion` (
 -- Volcado de datos para la tabla `publicacion`
 --
 
-INSERT INTO `publicacion` (`publicacionID`, `contenido`, `categoria`, `hora`) VALUES
-(1, 'Nueva adquisiciÃ³n: SteticABC acaba de anunciar un acuerdo para comprar SteticDEF con el objetivo de aumentar su presencia en el mercado alemÃ¡n. El acuerdo se estima en alrededor de 2 millones de euros. Lea mÃ¡s en SteticNews o NewsDaily', 'Lanzamiento de productos', '2022-11-21 20:16:02');
+INSERT INTO `publicacion` (`publicacionID`, `contenido`, `categoria`, `hora`, `empresa`, `website`) VALUES
+(1, 'Nueva adquisicion: SteticABC acaba de anunciar un acuerdo para comprar SteticDEF con el objetivo de aumentar su presencia en el mercado aleman. El acuerdo se estima en alrededor de 2 millones de euros. Lea mas en SteticNews o NewsDaily', 'Lanzamiento de productos', '2022-11-21 20:16:02', '', '');
 
 -- --------------------------------------------------------
 
