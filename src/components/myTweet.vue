@@ -8,6 +8,7 @@
         </header>
         <!-- Contenido -->
         <section class="border-bottom">
+            <h3><a :href="tweet.website" target="_blank">{{tweet.empresa}}</a></h3>
             <p>{{tweet.contenido}}</p>
         </section>
         <footer class="align">
@@ -16,7 +17,7 @@
             <!-- Links -->
             <p>ver más en
                 <span v-for="(link, index) in tweet.enlace" :key="index">
-                    <a :href="link">{{link}}</a><span v-if="index < tweet.enlace.length - 1"> y </span>
+                    <a :href="link" target="_blank">{{link}}</a><span v-if="index < tweet.enlace.length - 1"> y </span>
                 </span>
             </p>
         </footer>
@@ -28,6 +29,12 @@ export default {
     name: 'myTweet',
     props: {
         tweets: Array
+    },
+    data() {
+        return {
+            em: "Stetic News",
+            mm: "https://google.com"
+        }
     }
 }
 </script>

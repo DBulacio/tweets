@@ -20,7 +20,9 @@ if($action == '') { # Si el filtro está vacío
             $publicacion[$i]['id'] = $row_publicacion['publicacionID'];
             $publicacion[$i]['contenido'] = $row_publicacion['contenido'];
             $publicacion[$i]['categoria'] = $row_publicacion['categoria'];
-            $publicacion[$i]['fecha'] = $row_publicacion['hora']; # Estoy guardando solo la fecha ahora. UPS! @fix
+            $publicacion[$i]['fecha']   = $row_publicacion['hora'];
+            $publicacion[$i]['empresa'] = $row_publicacion['empresa'];
+            $publicacion[$i]['website'] = $row_publicacion['website'];
             $publicacionID = ['publicacionID' => $row_publicacion['publicacionID']];
 
             $SELECT_publi_region->execute($publicacionID);
@@ -64,7 +66,7 @@ if($action == '') { # Si el filtro está vacío
     WHERE tags.etiqueta LIKE :action AND tags.etiquetaID = pt.etiquetaID
     UNION
     SELECT DISTINCT publicacionID 
-    FROM publicacion WHERE contenido LIKE :action OR categoria LIKE :action
+    FROM publicacion WHERE contenido LIKE :action OR categoria LIKE :action OR empresa LIKE :action
     ");
 
     $SELECT->bindParam(':action', $action, PDO::PARAM_STR);
@@ -79,7 +81,9 @@ if($action == '') { # Si el filtro está vacío
                 $publicacion[$i]['id'] = $row_publicacion['publicacionID'];
                 $publicacion[$i]['contenido'] = $row_publicacion['contenido'];
                 $publicacion[$i]['categoria'] = $row_publicacion['categoria'];
-                $publicacion[$i]['fecha'] = $row_publicacion['hora']; # Estoy guardando solo la fecha ahora. UPS! @fix
+                $publicacion[$i]['fecha']   = $row_publicacion['hora'];
+                $publicacion[$i]['empresa'] = $row_publicacion['empresa'];
+                $publicacion[$i]['website'] = $row_publicacion['website'];
             }
 
             $SELECT_publi_region->execute($publicacionID);
@@ -115,7 +119,7 @@ if($action == '') { # Si el filtro está vacío
 function crear_con() {
     $user = "root";
     $pass = "";
-    $dbname = "noticias";
+    $dbname = "twooter";
 
     try {
         $con = new PDO('mysql:host=localhost;dbname='.$dbname, $user, $pass);

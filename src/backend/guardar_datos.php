@@ -17,28 +17,32 @@ try {
     $hora = date("Y-m-d H:i:s", $hora);
     $contenido = $_POST['contenido'];
     $categoria = $_POST['categoria'];
+    if(isset($_POST['empresa'])) {
+        $empresa = $_POST['empresa'];
+    } else {
+        $empresa = "";
+    }
+    if(isset($_POST['website'])) {
+        $website = validate_website($_POST['website']);
+    } else {
+        $website = "";
+    }
     
     # Select
     $SELECT_regiones  = $con->prepare("SELECT * FROM regiones WHERE regionID = :regionID");
     $SELECT_etiquetas = $con->prepare("SELECT * FROM etiquetas WHERE etiqueta = :etiqueta");
     # Insert
-    $INSERT_publicacion = $con->prepare("INSERT INTO publicacion (contenido, categoria, hora) VALUES (:contenido, :categoria, :hora)");
+    $INSERT_publicacion = $con->prepare("INSERT INTO publicacion (contenido, categoria, hora, empresa, website) VALUES (:contenido, :categoria, :hora, :empresa, :website)");
     $INSERT_enlace      = $con->prepare("INSERT INTO enlace (publicacionID, enlace) VALUES (:publicacionID, :enlace)");
     $INSERT_etiqueta    = $con->prepare("INSERT INTO etiquetas (etiqueta) VALUES (:etiqueta)");
     $INSERT_publi_etiqueta = $con->prepare("INSERT INTO publi_tags (publicacionID, etiquetaID) VALUES (:publicacionID, :etiquetaID)");
     $INSERT_publi_regiones = $con->prepare("INSERT INTO publi_region (publicacionID, regionID) VALUES (:publicacionID, :regionID)");
     
-    $INSERT_publicacion->execute(['contenido' => $contenido, 'categoria' => $categoria, 'hora' => $hora]);
+    $INSERT_publicacion->execute(['contenido' => $contenido, 'categoria' => $categoria, 'hora' => $hora, 'empresa' => $empresa, 'website' => $website]);
     $publicacionID = $con->lastInsertId();
 
     if(isset($_POST['region'])) {
-        $SELECT_regiones->execute(['regionID' => $_POST['region']]);
-        while($row_regiones = $SELECT_regiones->fetch()) { 
-            # Traer regionID
-            $regionID = $row_regiones['regionID'];
-        }
-        # Insertar en publi_region
-        $INSERT_publi_regiones->execute(['publicacionID' => $publicacionID, 'regionID' => $regionID]);
+        $INSERT_publi_regiones->execute(['publicacionID' => $publicacionID, 'regionID' => $_POST['region']]);
     }
     
     if(isset($_POST['etiqueta'])) {
@@ -71,9 +75,7 @@ try {
             $enlaces = explode(",", $spaceless_enlace);
             
             foreach($enlaces as $enlace) {
-                if(substr($enlace, 0, 7) !== "https://" && substr($enlace, 0, 6) !== "http://")
-                    $enlace = "https://".$enlace;
-
+                validate_website($enlace);
                 $INSERT_enlace->execute(['publicacionID' => $publicacionID, 'enlace' => $enlace]);
             }
         }
@@ -91,10 +93,17 @@ try {
     exit;
 }
 
+function validate_website($str) {
+    if(substr($str, 0, 7) !== "https://" && substr($str, 0, 6) !== "http://")
+        return "https://".$str;
+
+    return $str;
+}
+
 function crear_con() {
     $user = "root";
     $pass = "";
-    $dbname = "noticias";
+    $dbname = "twooter";
 
     try {
         $con = new PDO('mysql:host=localhost;dbname='.$dbname, $user, $pass);
